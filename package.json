@@ -1,0 +1,19 @@
+{
+  "name": "semdag",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.24.1"
+  },
+  "scripts": {
+    "format-and-lint": "biome check ."
+  },
+  "trustedDependencies": ["@biomejs/biome"]
+}
