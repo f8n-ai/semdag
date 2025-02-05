@@ -1,6 +1,8 @@
 {
   "name": "@f8n-ai/semdag",
   "private": false,
+  "homepage": "https://github.com/f8n-ai/semdat",
+  "author": "Eugene Yaroslavtsev <eugene@f8n.ai>",
   "version": "0.1.0",
   "type": "module",
   "exports": {
