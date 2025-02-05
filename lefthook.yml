@@ -1,0 +1,5 @@
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      run: bun run check --fix

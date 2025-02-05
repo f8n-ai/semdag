@@ -9,10 +9,10 @@ export interface Type<T extends Serializable> {
 }
 
 /** Represents a morphism (transformation) between two types. */
-export type Morphism<A extends Serializable, B extends Serializable> =
+export type Morphism<A extends Serializable, B extends Serializable, I extends Serializable = B> =
   | BasicMorphism<A, B>
   | ReversibleMorphism<A, B>
-  | ComposedMorphism<A, any, B> // Allow any intermediate type in composition
+  | ComposedMorphism<A, I, B>
 
 interface BasicMorphism<A extends Serializable, B extends Serializable> {
   kind: 'basic'
@@ -29,13 +29,13 @@ interface ReversibleMorphism<A extends Serializable, B extends Serializable> {
   inverse: (b: B) => A
 }
 
-interface ComposedMorphism<A extends Serializable, B extends Serializable, C extends Serializable> {
+interface ComposedMorphism<A extends Serializable, I extends Serializable, B extends Serializable> {
   kind: 'composed'
-  map: (a: A) => C
+  map: (a: A) => B
   source: Type<A>
-  target: Type<C>
-  first: Morphism<A, B>
-  second: Morphism<B, C>
+  target: Type<B>
+  first: Morphism<A, I>
+  second: Morphism<I, B>
 }
 
 /** Creates a reversible morphism. */
@@ -61,7 +61,7 @@ export const morphism = <A extends Serializable, B extends Serializable>(
 export const compose = <A extends Serializable, B extends Serializable, C extends Serializable>(
   first: Morphism<A, B>,
   second: Morphism<B, C>,
-): Morphism<A, C> => {
+): Morphism<A, C, B> => {
   if (first.target.schema !== second.source.schema) {
     throw new Error(`Cannot compose morphisms: Incompatible types.
             First morphism target type: ${first.target.name}
@@ -94,26 +94,20 @@ export const inverseOf = <A extends Serializable, B extends Serializable>(
 }
 
 /** Checks if a reversible morphism preserves properties (round-trip). */
-export const checkReversibility = <A extends Serializable, B extends Serializable>(
-  m: Morphism<A, B>,
+export const checkReversibility = <A extends Serializable, I extends Serializable, B extends Serializable>(
+  m: Morphism<A, B, I>,
   testValue: A,
 ): boolean => {
-  const inverse = inverseOf(m)
-  if (!inverse) {
-    return false
-  }
-
-  const forward = m.map(testValue)
-  const backward = inverse(forward)
-  return m.source.equals(testValue, backward)
+  const result = reverse(m, m.map(testValue))
+  return result.success && m.source.equals(testValue, result.value)
 }
 
 /** Represents either a successful result or an error. */
 export type Result<T, E> = { success: true; value: T } | { success: false; error: E }
 
 // Helper function for reversing composed morphisms
-const _reverseComposed = <A extends Serializable, B extends Serializable>(
-  m: ComposedMorphism<A, B, B>,
+const _reverseComposed = <A extends Serializable, I extends Serializable, B extends Serializable>(
+  m: ComposedMorphism<A, I, B>,
   value: B,
 ): Result<A, string> => {
   if (!isReversible(m.second)) {
@@ -129,14 +123,14 @@ const _reverseComposed = <A extends Serializable, B extends Serializable>(
     }
   }
 
-  const secondReversed = (m.second as ReversibleMorphism<B, B>).inverse(value)
-  const firstReversed = (m.first as ReversibleMorphism<A, B>).inverse(secondReversed)
+  const secondReversed = (m.second as ReversibleMorphism<I, B>).inverse(value)
+  const firstReversed = (m.first as ReversibleMorphism<A, I>).inverse(secondReversed)
   return { success: true, value: firstReversed }
 }
 
 /** Attempts to reverse a morphism. Returns a Result type. */
-export const reverse = <A extends Serializable, B extends Serializable>(
-  m: Morphism<A, B>,
+export const reverse = <A extends Serializable, I extends Serializable, B extends Serializable>(
+  m: Morphism<A, B, I>,
   value: B,
 ): Result<A, string> => {
   switch (m.kind) {

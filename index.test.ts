@@ -253,7 +253,8 @@ describe('Morphisms Library', () => {
   })
 
   it('reverse should return an appropriate error message for unknown morphism kinds', () => {
-    const unknownMorphism: any = { kind: 'unknown' }
+    const unknownMorphism = { kind: 'unknown' }
+    // @ts-expect-error
     const result = reverse(unknownMorphism, 'someValue')
     expect(result.success).toBe(false)
     if (!result.success) {
