@@ -10,12 +10,9 @@
   },
   "files": ["dist"],
   "scripts": {
-    "build": "bun build ./index.ts --outdir ./dist --target node",
-    "types": "bun build ./index.ts --outdir ./dist --declaration",
+    "build": "bun build ./index.ts --outdir ./dist --target node && bun build ./index.ts --outdir ./dist --declaration",
     "clean": "rm -rf dist",
-    "prepublishOnly": "bun run clean && bun run build && bun run types",
-    "format": "biome format .",
-    "lint": "biome lint .",
+    "prepublishOnly": "bun run clean && bun run build",
     "check": "biome check ."
   },
   "devDependencies": {
@@ -27,5 +24,8 @@
   "dependencies": {
     "zod": "^3.24.1"
   },
-  "trustedDependencies": ["@biomejs/biome", "lefthook"]
+  "trustedDependencies": ["@biomejs/biome", "lefthook"],
+  "engines": {
+    "bun": "1.2.2"
+  }
 }
