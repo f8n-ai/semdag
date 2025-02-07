@@ -147,27 +147,6 @@ if (reversedUser.success) {
 *   **Runtime Schema Checks:** The `compose` function performs runtime checks to ensure that the Zod schemas of the composed morphisms are compatible. This adds a small runtime overhead, but it's necessary to guarantee type safety in the general case.
 * **No HKT Emulation**: I am not using HKT emulation as it would make this library significantly more complex.
 
-
-
-Import:
-
-```typescript
-import { z } from 'zod';
-import {
-    Type,
-    Morphism,
-    reversibleMorphism,
-    morphism,
-    compose,
-    checkReversibility,
-    reverse,
-    isReversible,
-    inverseOf,
-    Result,
-    Serializable
-} from './morphisms';
-```
-
 ## Conclusion
 
 This library is a pragmatic solution to a common problem. It's not perfect, but let's face it - we all make these mistakes eventually. Let's just make them close to impossible. IMO, this is a step up from most home-rolled transformation logic libraries I've seen in the wild. It's designed to be used, extended, improved.  If you find bugs (and I'm sure there are still some lurking), report them.  If you have ideas for improvements, contribute.
