@@ -1,10 +1,14 @@
 {
   "name": "@f8n-ai/semdag",
   "private": false,
-  "homepage": "https://github.com/f8n-ai/semdat",
+  "homepage": "https://github.com/f8n-ai/semdag",
   "author": "Eugene Yaroslavtsev <eugene@f8n.ai>",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
