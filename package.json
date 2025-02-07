@@ -3,12 +3,9 @@
   "private": false,
   "homepage": "https://github.com/f8n-ai/semdag",
   "author": "Eugene Yaroslavtsev <eugene@f8n.ai>",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "files": ["dist", "README.md", "LICENSE.md"],
   "exports": {
     ".": {
       "import": "./dist/index.js",
