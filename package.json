@@ -3,17 +3,20 @@
   "private": false,
   "homepage": "https://github.com/f8n-ai/semdat",
   "author": "Eugene Yaroslavtsev <eugene@f8n.ai>",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     }
   },
-  "files": ["dist"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "bun build ./index.ts --outdir ./dist --target node && bun build ./index.ts --outdir ./dist --declaration",
+    "build": "tsc && bun build ./index.ts --minify --splitting --outdir=dist --target=node --format=esm && bun build ./index.ts --minify --splitting --outdir=dist --target=node --format=cjs",
     "clean": "rm -rf dist",
     "prepublishOnly": "bun run clean && bun run build",
     "check": "biome check ."
