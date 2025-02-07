@@ -1,4 +1,4 @@
-# semdag: Type-Safe Data Transformations in TypeScript
+# semdag: Type-Safe Reversible Data Transformations in TypeScript
 
 This library isn't about academic purity. It's about solving real problems with data transformations in TypeScript, *safely* and *reversibly*, in a way that scales. It's inspired by category theory, but it's *not* a category theory library. It's a *practical* tool for building robust systems.
 
