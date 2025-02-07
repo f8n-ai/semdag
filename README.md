@@ -2,6 +2,22 @@
 
 This library isn't about academic purity. It's about solving real problems with data transformations in TypeScript, *safely* and *reversibly*, in a way that scales. It's inspired by category theory, but it's *not* a category theory library. It's a *practical* tool for building robust systems.
 
+## Getting Started
+
+Install:
+
+```
+pnpm add @f8n-ai/semdag
+```
+
+```
+bun add @f8n-ai/semdag
+```
+
+```
+npm install --save @f8n-ai/semdag
+```
+
 ## The Problem (and Why You Should Care)
 
 You've been there. You're building a system that needs to transform data:
@@ -12,7 +28,7 @@ You've been there. You're building a system that needs to transform data:
 *   **Complex State Machines:** Managing valid state transitions in your application.
 *   **Data Pipelines:** Cleaning, normalizing, and transforming data for analysis or machine learning.
 
-You start with simple functions.  `dtoToEntity`, `entityToDto`, `requestToInternal`, `internalToResponse`.  It works.  For a while.
+You start with simple functions.  `dtoToEntity`, `entityToDto`, `requestToInternal`, `internalToResponse`.  It works. For a while.
 
 Then, things get messy:
 
@@ -131,13 +147,7 @@ if (reversedUser.success) {
 *   **Runtime Schema Checks:** The `compose` function performs runtime checks to ensure that the Zod schemas of the composed morphisms are compatible. This adds a small runtime overhead, but it's necessary to guarantee type safety in the general case.
 * **No HKT Emulation**: I am not using HKT emulation as it would make this library significantly more complex.
 
-## Getting Started
 
-Install:
-
-```
-bun add zod
-```
 
 Import:
 
